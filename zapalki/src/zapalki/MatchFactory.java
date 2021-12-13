@@ -9,6 +9,7 @@ public class MatchFactory {
         put(Colors.RED,RedMatch::new);
         put(Colors.BLUE,BlueMatch::new);
         put(Colors.GREEN,GreenMatch::new);
+        put(Colors.YELLOW,YellowMatch::new);
     }};
 
     public static Match createMatch(Colors color){
