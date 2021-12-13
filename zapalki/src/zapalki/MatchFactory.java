@@ -1,7 +1,7 @@
 package zapalki;
 
 public class MatchFactory {
-    public Match createMatch(String color){
+    public static Match createMatch(String color){
         Match val = null;
 
         switch (color) {
