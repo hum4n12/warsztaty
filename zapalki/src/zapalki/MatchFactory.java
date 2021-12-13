@@ -1,13 +1,13 @@
 package zapalki;
 
 public class MatchFactory {
-    public static Match createMatch(String color){
+    public static Match createMatch(Colors color){
         Match val = null;
 
         switch (color) {
-            case "red" -> val = new RedMatch();
-            case "blue" -> val = new BlueMatch();
-            case "green" -> val = new GreenMatch();
+            case RED -> val = new RedMatch();
+            case BLUE -> val = new BlueMatch();
+            case GREEN -> val = new GreenMatch();
             default -> {
                 System.out.println("Cannot create a match of given color");
             }
