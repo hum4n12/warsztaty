@@ -1,17 +1,26 @@
 package zapalki;
 
-public class MatchFactory {
-    public static Match createMatch(String color){
-        Match val = null;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 
-        switch (color) {
-            case "red" -> val = new RedMatch();
-            case "blue" -> val = new BlueMatch();
-            case "green" -> val = new GreenMatch();
-            case "yellow" -> val = new YellowMatch();
-            default -> {
-                System.out.println("Cannot create a match of given color");
-            }
+public class MatchFactory {
+    public static final Map<Colors,Supplier<Match>> mapa = new HashMap<>(){{
+        put(Colors.RED,RedMatch::new);
+        put(Colors.BLUE,BlueMatch::new);
+        put(Colors.GREEN,GreenMatch::new);
+        put(Colors.YELLOW,YellowMatch::new);
+    }};
+
+    public static Match createMatch(Colors color){
+        Match val = null;
+        Supplier<Match> match;
+
+        match = mapa.get(color);
+        if(match != null){
+            val = match.get();
+        } else{
+            System.out.println("That color does not exist");
         }
 
         return val;

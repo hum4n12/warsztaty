@@ -22,10 +22,10 @@ public class Main {
         for(int i = 0; i  < amount; i++) {
             int num = (int) (Math.random() * 10) % 4;
             Match m = switch (num) {
-                case 0 -> MatchFactory.createMatch("red");
-                case 1 -> MatchFactory.createMatch("green");
-                case 2 -> MatchFactory.createMatch("blue");
-                case 3 -> MatchFactory.createMatch("yellow");
+                case 0 -> MatchFactory.createMatch(Colors.RED);
+                case 1 -> MatchFactory.createMatch(Colors.GREEN);
+                case 2 -> MatchFactory.createMatch(Colors.BLUE);
+                case 3 -> MatchFactory.createMatch(Colors.YELLOW);
                 default -> null;
             };
             // dodawanie do pudełka zapałek
