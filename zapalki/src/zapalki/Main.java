@@ -20,11 +20,12 @@ public class Main {
 
     private static void addMatches(MatchBox box,int amount){
         for(int i = 0; i  < amount; i++) {
-            int num = (int) (Math.random() * 10) % 3;
+            int num = (int) (Math.random() * 10) % 4;
             Match m = switch (num) {
                 case 0 -> MatchFactory.createMatch("red");
                 case 1 -> MatchFactory.createMatch("green");
                 case 2 -> MatchFactory.createMatch("blue");
+                case 3 -> MatchFactory.createMatch("yellow");
                 default -> null;
             };
             // dodawanie do pudełka zapałek
