@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class MatchBox{
+    public enum MatchBoxType {
+        LARGE,
+        SMALL
+    }
+
     //klasa pudełko zapałek
     protected int boxSize = 5;
     protected List<Match> boxSpace;

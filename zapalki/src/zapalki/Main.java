@@ -1,36 +1,42 @@
 package zapalki;
-import java.lang.Math;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import console_input.Command;
+import console_input.CommandParser;
+import resources.Resources;
 
 public class Main {
-    private static final LargeMatchBox large = new LargeMatchBox();
-    private static final SmallMatchBox small = new SmallMatchBox();
-    private static int a = 0;
-    private static int b = 1;
+    private static final Resources resources = new Resources(0,0,0);
+    private static final List<MatchBox> boxes = new ArrayList<>();
+    private static final List<Match> matches = new ArrayList<>();
 
+    public static void main(String[] args) throws IOException {
+        System.out.println("Usage:\n"
+                + "add <resourceName> <resourceAmount> - to add resources"
+                + "sub <resourceName> <resourceAmount> - to subtract resources"
+                + "buy <itemName> <amount> - to buy items"
+                + "burn <itemType[match,box]> <item subtype[small,large] if type is 'box'> <amount> - to watch it burn"
+                + "put <box type[small,large]> <amount> - to put random matches to a box of given size");
 
-    public static void main(String[] args) {
-        //small match box class is not necessarry
-        addMatches(large,5);
-        addMatches(small,2);
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in));
 
-        large.turnColorToColor("red","green");
-        large.burnAll();
-        //testowy komentarz
+        String commandString;
+        CommandParser commandFactory = new CommandParser();
+        while (!(commandString = reader.readLine()).equalsIgnoreCase("q")) {
+            List<Command> commands = commandFactory.parseConsoleInput(commandString);
+            commands.forEach(cmd -> cmd.execute(resources));
+            printCurrentStatus();
+        }
     }
 
-    private static void addMatches(MatchBox box,int amount){
-        for(int i = 0; i  < amount; i++) {
-            int num = (int) (Math.random() * 10) % 4;
-            Match m = switch (num) {
-                case 0 -> MatchFactory.createMatch(Colors.RED);
-                case 1 -> MatchFactory.createMatch(Colors.GREEN);
-                case 2 -> MatchFactory.createMatch(Colors.BLUE);
-                case 3 -> MatchFactory.createMatch(Colors.YELLOW);
-                default -> null;
-            };
-            // dodawanie do pudełka zapałek
-
-            box.addMatch(m);
-        }
+    private static void printCurrentStatus() {
+        System.out.println(resources);
+        System.out.println(boxes);
+        System.out.println(matches);
     }
 }
