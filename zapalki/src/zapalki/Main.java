@@ -17,10 +17,10 @@ public class Main {
     public static void main(String[] args) throws IOException {
         System.out.println("Usage:\n"
                 + "add <resourceName> <resourceAmount> - to add resources"
-                + "sub <resourceName> <resourceAmount> - to subtract resources"
-                + "buy <itemName> <amount> - to buy items"
-                + "burn <itemType[match,box]> <item subtype[small,large] if type is 'box'> <amount> - to watch it burn"
-                + "put <box type[small,large]> <amount> - to put random matches to a box of given size");
+                + "\nsub <resourceName> <resourceAmount> - to subtract resources"
+                + "\nbuy <itemName> <amount> - to buy items"
+                + "\nburn <itemType[match,box]> <item subtype[small,large] if type is 'box'> <amount> - to watch it burn"
+                + "\nput <box type[small,large]> <amount> - to put random matches to a box of given size");
 
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(System.in));

@@ -23,7 +23,7 @@ public class Resources {
     }
 
     public Object buy(Cost cost) {
-        subtract(cost.cost);
+        this.subtract(cost.cost);
         return cost.effect.get();
     }
 

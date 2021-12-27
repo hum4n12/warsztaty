@@ -7,7 +7,7 @@ import resources.Resources;
 public class ResourcesCommand implements Command {
     public enum OperationType {
         ADD,
-        REM
+        SUB
     }
 
     private Resources delta;
@@ -29,9 +29,10 @@ public class ResourcesCommand implements Command {
             return null;
         }
         OperationType operation = OperationType.valueOf(operationString.toUpperCase());
-        if (operation == OperationType.REM) {
+        if (operation == OperationType.SUB) {
             resourceAmount = -resourceAmount;
         }
+
         ResourcesCommand command = new ResourcesCommand();
         command.delta = Resources.fromString(resourceType, resourceAmount);
         return command;
