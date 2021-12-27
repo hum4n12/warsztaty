@@ -7,6 +7,7 @@ public class CommandParser {
     public List<Command> parseConsoleInput(String line) {
         List<Command> commands = new ArrayList<>();
         String[] cmdParts = line.split(" ");
+
         if (ResourcesCommand.isParsingPossible(cmdParts)) {
             commands.add(ResourcesCommand.parse(cmdParts));
         } else {

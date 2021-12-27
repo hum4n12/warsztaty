@@ -7,12 +7,11 @@ import java.util.List;
 
 import console_input.Command;
 import console_input.CommandParser;
+import console_input.Items;
 import resources.Resources;
 
 public class Main {
-    private static final Resources resources = new Resources(0,0,0);
-    private static final List<MatchBox> boxes = new ArrayList<>();
-    private static final List<Match> matches = new ArrayList<>();
+    private static final Items items = new Items();
 
     public static void main(String[] args) throws IOException {
         System.out.println("Usage:\n"
@@ -29,14 +28,14 @@ public class Main {
         CommandParser commandFactory = new CommandParser();
         while (!(commandString = reader.readLine()).equalsIgnoreCase("q")) {
             List<Command> commands = commandFactory.parseConsoleInput(commandString);
-            commands.forEach(cmd -> cmd.execute(resources));
+            commands.forEach(cmd -> cmd.execute(items));
             printCurrentStatus();
         }
     }
 
     private static void printCurrentStatus() {
-        System.out.println(resources);
-        System.out.println(boxes);
-        System.out.println(matches);
+        System.out.println(items.getResources());
+        System.out.println(items.getBoxes());
+        System.out.println(items.getMatches());
     }
 }

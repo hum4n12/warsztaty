@@ -40,6 +40,6 @@ public class ResourcesCommand implements Command {
 
     @Override
     public void execute(Object currentResources) {
-        ((Resources)currentResources).add(delta);
+        ((Items)currentResources).getResources().add(delta);
     }
 }
