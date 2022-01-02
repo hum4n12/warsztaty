@@ -50,6 +50,10 @@ public abstract class MatchBox{
         return placeholder;
     }
 
+    public void printContent(){
+        boxSpace.forEach(match -> System.out.println(match));
+    }
+
     public int getBoxSize() {
         return boxSize;
     }

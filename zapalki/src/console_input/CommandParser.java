@@ -12,7 +12,10 @@ public class CommandParser {
             commands.add(ResourcesCommand.parse(cmdParts));
         } else if(BuyCommand.isParsingPossible(cmdParts)){
             commands.add(BuyCommand.parse(cmdParts));
-        } else {
+        } else if(PutCommand.isParsingPossible(cmdParts)){
+            commands.add(PutCommand.parse(cmdParts));
+        }
+        else {
             System.out.println("ERROR: Command not recognized");
         }
         return commands;
