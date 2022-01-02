@@ -47,4 +47,12 @@ public class Resources {
                 ", paper=" + paper +
                 '}';
     }
+
+    public boolean isEnough(Resources r){
+        return (this.wood >= r.wood && this.sulfur >= r.sulfur && this.paper >= r.paper);
+    }
+
+    public static Resources multiply(Resources r, int mul){
+        return new Resources(r.wood*mul,r.sulfur*mul,r.paper*mul);
+    }
 }

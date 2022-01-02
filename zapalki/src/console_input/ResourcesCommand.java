@@ -39,7 +39,7 @@ public class ResourcesCommand implements Command {
     }
 
     @Override
-    public void execute(Object currentResources) {
-        ((Items)currentResources).getResources().add(delta);
+    public void execute(Items currentResources) {
+        currentResources.getResources().add(delta);
     }
 }

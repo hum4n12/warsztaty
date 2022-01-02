@@ -23,4 +23,12 @@ public enum Cost {
         this.cost = cost;
         this.effect = effect;
     }
+
+    public Resources getCost(){
+        return this.cost;
+    }
+
+    public Supplier<?> getEffect(){
+        return this.effect;
+    }
 }
