@@ -62,9 +62,14 @@ public class PutCommand implements Command{
                 .mapToInt(MatchBox::getRemainingSpace)
                 .sum();
 
+        if(this.amount > data.getMatches().size()){
+            System.out.println("ERROR: There are not enough matches");
+            return;
+        }
+
 
         if(this.amount > space){
-            System.out.println("ERROR: There are no enough space in matchboxes");
+            System.out.println("ERROR: There are not enough space in matchboxes");
             return;
         }
 

@@ -14,6 +14,8 @@ public class CommandParser {
             commands.add(BuyCommand.parse(cmdParts));
         } else if(PutCommand.isParsingPossible(cmdParts)){
             commands.add(PutCommand.parse(cmdParts));
+        } else if(BurnCommand.isParsingPossible(cmdParts)){
+            commands.add(BurnCommand.parse(cmdParts));
         }
         else {
             System.out.println("ERROR: Command not recognized");
