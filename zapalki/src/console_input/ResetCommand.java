@@ -1,13 +1,13 @@
 package console_input;
 
-public class ResetCommand implements Command{
+public class ResetCommand implements Command {
     private static final String NAME = "reset";
 
-    private Items reset(){
+    private Items reset() {
         return new Items();
     }
 
-    ResetCommand(){
+    ResetCommand() {
 
     }
 

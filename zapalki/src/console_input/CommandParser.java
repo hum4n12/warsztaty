@@ -10,16 +10,15 @@ public class CommandParser {
 
         if (ResourcesCommand.isParsingPossible(cmdParts)) {
             commands.add(ResourcesCommand.parse(cmdParts));
-        } else if(BuyCommand.isParsingPossible(cmdParts)){
+        } else if (BuyCommand.isParsingPossible(cmdParts)) {
             commands.add(BuyCommand.parse(cmdParts));
-        } else if(PutCommand.isParsingPossible(cmdParts)){
+        } else if (PutCommand.isParsingPossible(cmdParts)) {
             commands.add(PutCommand.parse(cmdParts));
-        } else if(BurnCommand.isParsingPossible(cmdParts)){
+        } else if (BurnCommand.isParsingPossible(cmdParts)) {
             commands.add(BurnCommand.parse(cmdParts));
-        } else if(ResetCommand.isParsingPossible(cmdParts)){
+        } else if (ResetCommand.isParsingPossible(cmdParts)) {
             commands.add(ResetCommand.parse(cmdParts));
-        }
-        else {
+        } else {
             System.out.println("ERROR: Command not recognized");
         }
         return commands;

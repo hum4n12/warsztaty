@@ -10,21 +10,20 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class BurnCommand implements Command{
+public class BurnCommand implements Command {
     private static final String NAME = "burn";
     private final MatchBox matchBox;
     private final Match match;
     private final int amount;
 
 
-    public BurnCommand(Object burnTarget,int amount) {
-        if(burnTarget instanceof MatchBox){
-            this.matchBox = (MatchBox)burnTarget;
+    public BurnCommand(Object burnTarget, int amount) {
+        if (burnTarget instanceof MatchBox) {
+            this.matchBox = (MatchBox) burnTarget;
             this.match = null;
-        }
-        else {
+        } else {
             this.matchBox = null;
-            this.match = (Match)burnTarget;
+            this.match = (Match) burnTarget;
         }
         this.amount = amount;
     }
@@ -40,14 +39,14 @@ public class BurnCommand implements Command{
         MatchBox matchBox = null;
         int lastCommandPart = 2;
 
-        if(!(burnObject.equals("MATCH") || burnObject.equals("BOX"))){
+        if (!(burnObject.equals("MATCH") || burnObject.equals("BOX"))) {
             System.out.println("ERROR: '" + cmdParts[1] + "' is not a match or box");
             return null;
-        } else if(burnObject.equals("BOX")){
+        } else if (burnObject.equals("BOX")) {
             lastCommandPart = 3;
             String size = cmdParts[2].toUpperCase();
 
-            if(size.equals("SMALL") || size.equals("LARGE")){
+            if (size.equals("SMALL") || size.equals("LARGE")) {
                 burnObject = size + "_MATCH" + burnObject;
             } else {
                 System.out.println("ERROR: '" + cmdParts[2] + "' is not a valid size");
@@ -61,7 +60,7 @@ public class BurnCommand implements Command{
                 .findAny();
 
 
-        if(!(boxOpt.isPresent() && (boxOpt.get().getEffect().get() instanceof MatchBox) || (boxOpt.get().getEffect().get() instanceof Match))){
+        if (!(boxOpt.isPresent() && (boxOpt.get().getEffect().get() instanceof MatchBox) || (boxOpt.get().getEffect().get() instanceof Match))) {
             System.out.println("ERROR: '" + burnObject + "' is not a match or matchbox");
             return null;
         }
@@ -74,30 +73,29 @@ public class BurnCommand implements Command{
             return null;
         }
 
-        return new BurnCommand(boxOpt.get().getEffect().get(),amount);
+        return new BurnCommand(boxOpt.get().getEffect().get(), amount);
     }
 
     @Override
     public void execute(Items data) {
-        if(this.match != null){
-            if(data.getMatches().size() == 0){
+        if (this.match != null) {
+            if (data.getMatches().size() == 0) {
                 System.out.println("ERROR: there are no matches");
                 return;
             }
 
-            if(this.amount > data.getMatches().size()){
+            if (this.amount > data.getMatches().size()) {
                 System.out.println("ERROR: there are not enough matches");
                 return;
             }
 
-            for(int i = 0; i < this.amount; i++){
+            for (int i = 0; i < this.amount; i++) {
                 Match match = data.getMatches().get(new Random().nextInt(data.getMatches().size()));
                 match.putOnFire();
                 data.getMatches().remove(match);
             }
-        }
-        else{
-            if(data.getBoxes().size() == 0){
+        } else {
+            if (data.getBoxes().size() == 0) {
                 System.out.println("ERROR: there are no boxes");
                 return;
             }
@@ -109,12 +107,12 @@ public class BurnCommand implements Command{
                     .collect(Collectors.toList())
             ;
 
-            if(this.amount > availableBoxes.size()){
+            if (this.amount > availableBoxes.size()) {
                 System.out.println("ERROR: there are not enough matchboxes");
                 return;
             }
 
-            for(int i = 0; i < this.amount; i++){
+            for (int i = 0; i < this.amount; i++) {
                 MatchBox box = availableBoxes.get(new Random().nextInt(availableBoxes.size()));
                 box.burnAll();
                 availableBoxes.remove(box);

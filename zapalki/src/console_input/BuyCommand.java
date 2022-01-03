@@ -8,7 +8,7 @@ import zapalki.MatchBox;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class BuyCommand implements Command{
+public class BuyCommand implements Command {
     private static final String NAME = "buy";
     private final Cost buyItem;
     private final int amount;
@@ -37,30 +37,30 @@ public class BuyCommand implements Command{
                 .filter(item -> item.name().equals(itemName))
                 .findAny();
 
-        if(itemOpt.isPresent()) {
+        if (itemOpt.isPresent()) {
             itemCost = itemOpt.get();
         } else {
             System.out.println("ERROR: '" + cmdParts[1] + "' item does not exist");
             return null;
         }
 
-        return new BuyCommand(itemCost,amount);
+        return new BuyCommand(itemCost, amount);
     }
 
     @Override
     public void execute(Items data) {
-        Resources multipliedResources = Resources.multiply(this.buyItem.getCost(),this.amount);
-        if(!data.getResources().isEnough(multipliedResources)){
+        Resources multipliedResources = Resources.multiply(this.buyItem.getCost(), this.amount);
+        if (!data.getResources().isEnough(multipliedResources)) {
             System.out.println("ERROR: not enough resources");
             return;
         }
 
         data.getResources().subtract(multipliedResources);
 
-        for(int i = 0; i < this.amount; i++){
-            switch (buyItem){
-                case MATCH -> data.getMatches().add((Match)buyItem.getEffect().get());
-                case LARGE_MATCHBOX,SMALL_MATCHBOX -> data.getBoxes().add((MatchBox)buyItem.getEffect().get());
+        for (int i = 0; i < this.amount; i++) {
+            switch (buyItem) {
+                case MATCH -> data.getMatches().add((Match) buyItem.getEffect().get());
+                case LARGE_MATCHBOX, SMALL_MATCHBOX -> data.getBoxes().add((MatchBox) buyItem.getEffect().get());
             }
         }
 

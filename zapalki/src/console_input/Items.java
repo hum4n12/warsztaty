@@ -12,9 +12,9 @@ public class Items {
     private final int sulfur = 0;
     private final int paper = 0;
 
-    private  Resources resources = new Resources(this.wood,this.sulfur,this.paper);
-    private  List<MatchBox> boxes = new ArrayList<>();
-    private  List<Match> matches = new ArrayList<>();
+    private Resources resources = new Resources(this.wood, this.sulfur, this.paper);
+    private List<MatchBox> boxes = new ArrayList<>();
+    private List<Match> matches = new ArrayList<>();
 
     public Resources getResources() {
         return resources;
@@ -28,8 +28,8 @@ public class Items {
         return matches;
     }
 
-    public void reset(){
-        this.resources = new Resources(wood,sulfur,paper);
+    public void reset() {
+        this.resources = new Resources(wood, sulfur, paper);
         this.boxes = new ArrayList<>();
         this.matches = new ArrayList<>();
     }
