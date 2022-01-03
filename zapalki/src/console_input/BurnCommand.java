@@ -17,14 +17,9 @@ public class BurnCommand implements Command {
     private final int amount;
 
 
-    public BurnCommand(Object burnTarget, int amount) {
-        if (burnTarget instanceof MatchBox) {
-            this.matchBox = (MatchBox) burnTarget;
-            this.match = null;
-        } else {
-            this.matchBox = null;
-            this.match = (Match) burnTarget;
-        }
+    public BurnCommand(MatchBox matchBox,Match match, int amount) {
+        this.matchBox = matchBox;
+        this.match = match;
         this.amount = amount;
     }
 
@@ -73,7 +68,16 @@ public class BurnCommand implements Command {
             return null;
         }
 
-        return new BurnCommand(boxOpt.get().getEffect().get(), amount);
+        Object burnTarget = boxOpt.get().getEffect().get();
+
+        if (burnTarget instanceof MatchBox) {
+            matchBox = (MatchBox) burnTarget;
+        } else {
+            match = (Match) burnTarget;
+        }
+
+
+        return new BurnCommand(matchBox,match,amount);
     }
 
     @Override
