@@ -17,7 +17,7 @@ public class BurnCommand implements Command {
     private final int amount;
 
 
-    public BurnCommand(MatchBox matchBox,Match match, int amount) {
+    public BurnCommand(MatchBox matchBox, Match match, int amount) {
         this.matchBox = matchBox;
         this.match = match;
         this.amount = amount;
@@ -77,50 +77,60 @@ public class BurnCommand implements Command {
         }
 
 
-        return new BurnCommand(matchBox,match,amount);
+        return new BurnCommand(matchBox, match, amount);
     }
 
     @Override
     public void execute(Items data) {
         if (this.match != null) {
-            if (data.getMatches().size() == 0) {
-                System.out.println("ERROR: there are no matches");
-                return;
-            }
-
-            if (this.amount > data.getMatches().size()) {
-                System.out.println("ERROR: there are not enough matches");
-                return;
-            }
-
-            for (int i = 0; i < this.amount; i++) {
-                Match match = data.getMatches().get(new Random().nextInt(data.getMatches().size()));
-                match.putOnFire();
-                data.getMatches().remove(match);
-            }
+            this.burnMatch(data);
         } else {
-            if (data.getBoxes().size() == 0) {
-                System.out.println("ERROR: there are no boxes");
-                return;
-            }
-            List<MatchBox> availableBoxes;
-            //getting list of the boxes with remaining space
-            availableBoxes = data.getBoxes().stream()
-                    .filter(box -> (box.getClass().equals(this.matchBox.getClass())))
-                    .filter(box -> box.getRemainingSpace() < box.getBoxSize())
-                    .collect(Collectors.toList())
-            ;
-
-            if (this.amount > availableBoxes.size()) {
-                System.out.println("ERROR: there are not enough matchboxes");
-                return;
-            }
-
-            for (int i = 0; i < this.amount; i++) {
-                MatchBox box = availableBoxes.get(new Random().nextInt(availableBoxes.size()));
-                box.burnAll();
-                availableBoxes.remove(box);
-            }
+            this.burnMatchBox(data);
         }
     }
+
+    private void burnMatch(Items data) {
+        if (data.getMatches().size() == 0) {
+            System.out.println("ERROR: there are no matches");
+            return;
+        }
+
+        if (this.amount > data.getMatches().size()) {
+            System.out.println("ERROR: there are not enough matches");
+            return;
+        }
+
+        for (int i = 0; i < this.amount; i++) {
+            Match match = data.getMatches().get(new Random().nextInt(data.getMatches().size()));
+            match.putOnFire();
+            data.getMatches().remove(match);
+        }
+    }
+
+    private void burnMatchBox(Items data) {
+        if (data.getBoxes().size() == 0) {
+            System.out.println("ERROR: there are no boxes");
+            return;
+        }
+        List<MatchBox> availableBoxes;
+        //getting list of the boxes with remaining space
+        availableBoxes = data.getBoxes().stream()
+                .filter(box -> (box.getClass().equals(this.matchBox.getClass())))
+                .filter(box -> box.getRemainingSpace() < box.getBoxSize())
+                .collect(Collectors.toList())
+        ;
+
+        if (this.amount > availableBoxes.size()) {
+            System.out.println("ERROR: there are not enough matchboxes");
+            return;
+        }
+
+        for (int i = 0; i < this.amount; i++) {
+            MatchBox box = availableBoxes.get(new Random().nextInt(availableBoxes.size()));
+            box.burnAll();
+            availableBoxes.remove(box);
+        }
+    }
+
+
 }
