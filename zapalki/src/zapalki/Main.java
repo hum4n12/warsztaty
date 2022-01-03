@@ -19,7 +19,8 @@ public class Main {
                 + "\nsub <resourceName> <resourceAmount> - to subtract resources"
                 + "\nbuy <itemName> <amount> - to buy items"
                 + "\nburn <itemType[match,box]> <item subtype[small,large] if type is 'box'> <amount> - to watch it burn"
-                + "\nput <box type[small,large]> <amount> - to put random matches to a box of given size");
+                + "\nput <box type[small,large]> <amount> - to put random matches to a box of given size"
+                + "\nreset - to reset state of program");
 
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(System.in));

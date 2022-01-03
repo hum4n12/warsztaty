@@ -8,9 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Items {
-    private final Resources resources = new Resources(0,0,0);
-    private final List<MatchBox> boxes = new ArrayList<>();
-    private final List<Match> matches = new ArrayList<>();
+    private final int wood = 0;
+    private final int sulfur = 0;
+    private final int paper = 0;
+
+    private  Resources resources = new Resources(this.wood,this.sulfur,this.paper);
+    private  List<MatchBox> boxes = new ArrayList<>();
+    private  List<Match> matches = new ArrayList<>();
 
     public Resources getResources() {
         return resources;
@@ -24,4 +28,9 @@ public class Items {
         return matches;
     }
 
+    public void reset(){
+        this.resources = new Resources(wood,sulfur,paper);
+        this.boxes = new ArrayList<>();
+        this.matches = new ArrayList<>();
+    }
 }
