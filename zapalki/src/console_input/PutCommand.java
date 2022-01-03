@@ -4,9 +4,8 @@ import resources.Cost;
 import zapalki.Match;
 import zapalki.MatchBox;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PutCommand implements Command{
     private static final String NAME = "put";
@@ -49,6 +48,26 @@ public class PutCommand implements Command{
 
     @Override
     public void execute(Items data) {
+        List<MatchBox> availableBoxes;
+
+        //getting list of the boxes with remaining space
+        availableBoxes = data.getBoxes().stream()
+                .filter(box -> (box.getClass().equals(this.type.getClass())))
+                .filter(box -> box.getRemainingSpace() > 0)
+                .collect(Collectors.toList())
+                ;
+
+        //counting space
+        int space = availableBoxes.stream()
+                .mapToInt(MatchBox::getRemainingSpace)
+                .sum();
+
+
+        if(this.amount > space){
+            System.out.println("ERROR: There are no enough space in matchboxes");
+            return;
+        }
+
         if(data.getBoxes().size() <= 0){
             System.out.println("ERROR: There are no matchboxes");
             return;
@@ -58,13 +77,19 @@ public class PutCommand implements Command{
             System.out.println("ERROR: There are no matches");
             return;
         }
-        MatchBox box = data.getBoxes().get(new Random().nextInt(data.getBoxes().size()));
 
+
+        MatchBox box = availableBoxes.get(new Random().nextInt(availableBoxes.size()));
         for(int i = 0; i < this.amount; i++){
             Match match = data.getMatches().get(new Random().nextInt(data.getMatches().size()));
             box.addMatch(match);
-        }
+            data.getMatches().remove(match);
 
-        box.printContent();
+            if(box.getRemainingSpace() == 0){
+                availableBoxes.remove(box);
+                if(availableBoxes.size() != 0)
+                    box = availableBoxes.get(new Random().nextInt(availableBoxes.size()));
+            }
+        }
     }
 }

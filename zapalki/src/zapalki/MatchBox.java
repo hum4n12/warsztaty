@@ -54,6 +54,10 @@ public abstract class MatchBox{
         boxSpace.forEach(match -> System.out.println(match));
     }
 
+    public int getRemainingSpace(){
+        return boxSize - boxSpace.size();
+    }
+
     public int getBoxSize() {
         return boxSize;
     }
