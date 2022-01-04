@@ -1,5 +1,7 @@
 package zapalki;
 
+import gui.GuiManager;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -20,7 +22,7 @@ public class MatchFactory {
         if(match != null){
             val = match.get();
         } else{
-            System.out.println("That color does not exist");
+            GuiManager.print("That color does not exist");
         }
 
         return val;
@@ -31,7 +33,7 @@ public class MatchFactory {
         case LARGE: return new LargeMatchBox();
         case SMALL: return new SmallMatchBox();
         default:
-            System.out.println("Invalid MatchBox type");
+            GuiManager.print("Invalid MatchBox type");
             return null;
         }
     }

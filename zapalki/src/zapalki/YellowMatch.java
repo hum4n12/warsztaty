@@ -1,11 +1,13 @@
 package zapalki;
 
+import gui.GuiManager;
+
 public class YellowMatch extends Match{
     YellowMatch(){
         color = "yellow";
     }
     @Override
     public void putOnFire(){
-        System.out.println(color);
+        GuiManager.print(color);
     }
 }

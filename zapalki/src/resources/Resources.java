@@ -1,5 +1,7 @@
 package resources;
 
+import gui.GuiManager;
+
 public class Resources {
     private int wood;
     private int sulfur;
@@ -17,7 +19,7 @@ public class Resources {
         case "sulfur": return new Resources(0, amount, 0);
         case "paper": return new Resources(0, 0, amount);
         default:
-            System.out.println("Invalid resource type");
+            GuiManager.print("Invalid resource type");
             return null;
         }
     }

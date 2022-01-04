@@ -1,5 +1,7 @@
 package console_input;
 
+import gui.GuiManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class CommandParser {
         } else if (ResetCommand.isParsingPossible(cmdParts)) {
             commands.add(ResetCommand.parse(cmdParts));
         } else {
-            System.out.println("ERROR: Command not recognized");
+            GuiManager.print("ERROR: Command \"" + line + "\" not recognized");
         }
         return commands;
     }

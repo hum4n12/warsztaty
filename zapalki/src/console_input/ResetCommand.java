@@ -1,5 +1,7 @@
 package console_input;
 
+import gui.GuiManager;
+
 public class ResetCommand implements Command {
     private static final String NAME = "reset";
 
@@ -21,7 +23,7 @@ public class ResetCommand implements Command {
 
     @Override
     public void execute(Items data) {
-        System.out.println("RESET STATE");
+        GuiManager.print("RESET STATE");
         data.reset();
     }
 }
