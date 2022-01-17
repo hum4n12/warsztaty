@@ -1,5 +1,6 @@
 package console_input;
 
+import gui.GuiManager;
 import resources.Cost;
 import zapalki.Match;
 import zapalki.MatchBox;
@@ -35,7 +36,7 @@ public class BurnCommand implements Command {
         int lastCommandPart = 2;
 
         if (!(burnObject.equals("MATCH") || burnObject.equals("BOX"))) {
-            System.out.println("ERROR: '" + cmdParts[1] + "' is not a match or box");
+            GuiManager.print("ERROR: '" + cmdParts[1] + "' is not a match or box");
             return null;
         } else if (burnObject.equals("BOX")) {
             lastCommandPart = 3;
@@ -44,7 +45,7 @@ public class BurnCommand implements Command {
             if (size.equals("SMALL") || size.equals("LARGE")) {
                 burnObject = size + "_MATCH" + burnObject;
             } else {
-                System.out.println("ERROR: '" + cmdParts[2] + "' is not a valid size");
+                GuiManager.print("ERROR: '" + cmdParts[2] + "' is not a valid size");
                 return null;
             }
         }
@@ -56,7 +57,7 @@ public class BurnCommand implements Command {
 
 
         if (!(boxOpt.isPresent() && (boxOpt.get().getEffect().get() instanceof MatchBox) || (boxOpt.get().getEffect().get() instanceof Match))) {
-            System.out.println("ERROR: '" + burnObject + "' is not a match or matchbox");
+            GuiManager.print("ERROR: '" + burnObject + "' is not a match or matchbox");
             return null;
         }
 
@@ -64,7 +65,7 @@ public class BurnCommand implements Command {
         try {
             amount = Integer.parseInt(cmdParts[lastCommandPart]);
         } catch (NumberFormatException nfe) {
-            System.out.println("ERROR: '" + cmdParts[lastCommandPart] + "' is not a number");
+            GuiManager.print("ERROR: '" + cmdParts[lastCommandPart] + "' is not a number");
             return null;
         }
 
@@ -91,12 +92,12 @@ public class BurnCommand implements Command {
 
     private void burnMatch(Items data) {
         if (data.getMatches().size() == 0) {
-            System.out.println("ERROR: there are no matches");
+            GuiManager.print("ERROR: there are no matches");
             return;
         }
 
         if (this.amount > data.getMatches().size()) {
-            System.out.println("ERROR: there are not enough matches");
+            GuiManager.print("ERROR: there are not enough matches");
             return;
         }
 
@@ -109,7 +110,7 @@ public class BurnCommand implements Command {
 
     private void burnMatchBox(Items data) {
         if (data.getBoxes().size() == 0) {
-            System.out.println("ERROR: there are no boxes");
+            GuiManager.print("ERROR: there are no boxes");
             return;
         }
         List<MatchBox> availableBoxes;
@@ -121,7 +122,7 @@ public class BurnCommand implements Command {
         ;
 
         if (this.amount > availableBoxes.size()) {
-            System.out.println("ERROR: there are not enough matchboxes");
+            GuiManager.print("ERROR: there are not enough matchboxes");
             return;
         }
 

@@ -1,5 +1,6 @@
 package console_input;
 
+import gui.GuiManager;
 import resources.Cost;
 import zapalki.Match;
 import zapalki.MatchBox;
@@ -31,7 +32,7 @@ public class PutCommand implements Command {
         try {
             amount = Integer.parseInt(cmdParts[2]);
         } catch (NumberFormatException nfe) {
-            System.out.println("ERROR: '" + cmdParts[2] + "' is not a number");
+            GuiManager.print("ERROR: '" + cmdParts[2] + "' is not a number");
             return null;
         }
         Optional<Cost> boxOpt = Arrays.stream(Cost.values())
@@ -39,7 +40,7 @@ public class PutCommand implements Command {
                 .findAny();
 
         if (!(boxOpt.isPresent() && boxOpt.get().getEffect().get() instanceof MatchBox)) {
-            System.out.println("ERROR: '" + boxType + "' is not a matchbox");
+            GuiManager.print("ERROR: '" + boxType + "' is not a matchbox");
             return null;
         }
         type = (MatchBox) boxOpt.get().getEffect().get();
@@ -63,23 +64,23 @@ public class PutCommand implements Command {
                 .sum();
 
         if (this.amount > data.getMatches().size()) {
-            System.out.println("ERROR: There are not enough matches");
+            GuiManager.print("ERROR: There are not enough matches");
             return;
         }
 
 
         if (this.amount > space) {
-            System.out.println("ERROR: There are not enough space in matchboxes");
+            GuiManager.print("ERROR: There are not enough space in matchboxes");
             return;
         }
 
         if (data.getBoxes().size() <= 0) {
-            System.out.println("ERROR: There are no matchboxes");
+            GuiManager.print("ERROR: There are no matchboxes");
             return;
         }
 
         if (data.getMatches().size() <= 0) {
-            System.out.println("ERROR: There are no matches");
+            GuiManager.print("ERROR: There are no matches");
             return;
         }
 

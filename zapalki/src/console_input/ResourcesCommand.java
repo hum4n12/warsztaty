@@ -2,6 +2,7 @@ package console_input;
 
 import java.util.Arrays;
 
+import gui.GuiManager;
 import resources.Resources;
 
 public class ResourcesCommand implements Command {
@@ -25,7 +26,7 @@ public class ResourcesCommand implements Command {
         try {
             resourceAmount = Integer.parseInt(cmdParts[2]);
         } catch (NumberFormatException nfe) {
-            System.out.println("ERROR: '" + cmdParts[2] + "' is not a number");
+            GuiManager.print("ERROR: '" + cmdParts[2] + "' is not a number");
             return null;
         }
         OperationType operation = OperationType.valueOf(operationString.toUpperCase());

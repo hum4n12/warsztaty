@@ -1,5 +1,6 @@
 package console_input;
 
+import gui.GuiManager;
 import resources.Cost;
 import resources.Resources;
 import zapalki.Match;
@@ -30,7 +31,7 @@ public class BuyCommand implements Command {
         try {
             amount = Integer.parseInt(cmdParts[2]);
         } catch (NumberFormatException nfe) {
-            System.out.println("ERROR: '" + cmdParts[2] + "' is not a number");
+            GuiManager.print("ERROR: '" + cmdParts[2] + "' is not a number");
             return null;
         }
         Optional<Cost> itemOpt = Arrays.stream(Cost.values())
@@ -40,7 +41,7 @@ public class BuyCommand implements Command {
         if (itemOpt.isPresent()) {
             itemCost = itemOpt.get();
         } else {
-            System.out.println("ERROR: '" + cmdParts[1] + "' item does not exist");
+            GuiManager.print("ERROR: '" + cmdParts[1] + "' item does not exist");
             return null;
         }
 
@@ -51,7 +52,7 @@ public class BuyCommand implements Command {
     public void execute(Items data) {
         Resources multipliedResources = Resources.multiply(this.buyItem.getCost(), this.amount);
         if (!data.getResources().isEnough(multipliedResources)) {
-            System.out.println("ERROR: not enough resources");
+            GuiManager.print("ERROR: not enough resources");
             return;
         }
 
