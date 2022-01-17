@@ -1,4 +1,4 @@
-package resources;
+package zapalki;
 
 import zapalki.Colors;
 import zapalki.MatchBox;

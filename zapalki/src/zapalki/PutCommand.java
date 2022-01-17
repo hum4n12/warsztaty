@@ -1,9 +1,6 @@
-package console_input;
+package zapalki;
 
-import gui.GuiManager;
-import resources.Cost;
 import zapalki.Match;
-import zapalki.MatchBox;
 
 import java.util.*;
 import java.util.stream.Collectors;

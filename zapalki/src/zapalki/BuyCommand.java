@@ -1,10 +1,4 @@
-package console_input;
-
-import gui.GuiManager;
-import resources.Cost;
-import resources.Resources;
-import zapalki.Match;
-import zapalki.MatchBox;
+package zapalki;
 
 import java.util.Arrays;
 import java.util.Optional;

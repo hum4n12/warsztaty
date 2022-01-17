@@ -1,7 +1,5 @@
 package zapalki;
 
-import gui.GuiManager;
-
 public class Ashes extends Match{
 
     @Override

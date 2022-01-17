@@ -1,6 +1,4 @@
-package console_input;
-
-import gui.GuiManager;
+package zapalki;
 
 import java.util.ArrayList;
 import java.util.List;

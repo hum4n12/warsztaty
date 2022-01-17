@@ -1,6 +1,4 @@
-package console_input;
-
-import gui.GuiManager;
+package zapalki;
 
 public class ResetCommand implements Command {
     private static final String NAME = "reset";

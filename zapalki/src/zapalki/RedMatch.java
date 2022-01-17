@@ -1,7 +1,5 @@
 package zapalki;
 
-import gui.GuiManager;
-
 public class RedMatch extends Match{
     RedMatch(){
         color = "red";

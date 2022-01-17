@@ -1,10 +1,5 @@
 package zapalki;
 
-import console_input.Items;
-import futures.FutureUtils;
-import gui.GuiManager;
-import resources.Resources;
-
 
 public class Main {
     private static final Items items = new Items();

@@ -1,9 +1,6 @@
-package console_input;
+package zapalki;
 
 import java.util.Arrays;
-
-import gui.GuiManager;
-import resources.Resources;
 
 public class ResourcesCommand implements Command {
     public enum OperationType {
