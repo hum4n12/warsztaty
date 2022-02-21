@@ -24,6 +24,7 @@ public class Worker {
 
     public void buy() {
         this.items.getResources().add(this.resource);
+        this.items.getResources().subtract(this.cost);
     }
 
     public void dismiss() {

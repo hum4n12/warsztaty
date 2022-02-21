@@ -1,26 +1,34 @@
 package zapalki;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class CommandParser {
     public List<Command> parseConsoleInput(String line) {
-        List<Command> commands = new ArrayList<>();
+        List<Parser> parsers = Arrays.asList(
+                BurnCommand.getParser(),
+                BuyCommand.getParser(),
+                PutCommand.getParser(),
+                ResourcesCommand.getParser(),
+                ResetCommand.getParser(),
+                HireCommand.getParser()
+                );
         String[] cmdParts = line.split(" ");
 
-        if (ResourcesCommand.isParsingPossible(cmdParts)) {
-            commands.add(ResourcesCommand.parse(cmdParts));
-        } else if (BuyCommand.isParsingPossible(cmdParts)) {
-            commands.add(BuyCommand.parse(cmdParts));
-        } else if (PutCommand.isParsingPossible(cmdParts)) {
-            commands.add(PutCommand.parse(cmdParts));
-        } else if (BurnCommand.isParsingPossible(cmdParts)) {
-            commands.add(BurnCommand.parse(cmdParts));
-        } else if (ResetCommand.isParsingPossible(cmdParts)) {
-            commands.add(ResetCommand.parse(cmdParts));
-        } else {
+
+        Optional<Parser> parser = parsers.stream()
+                .filter(p -> p.isParsingPossible(cmdParts))
+                .findAny();
+
+        List<Command> commands = new ArrayList<>();
+        parser.ifPresentOrElse(p -> {
+            commands.add(p.parse(cmdParts));
+        },() -> {
             GuiManager.print("ERROR: Command \"" + line + "\" not recognized");
-        }
+        });
+
         return commands;
     }
 

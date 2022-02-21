@@ -10,30 +10,36 @@ public class ResourcesCommand implements Command {
 
     private Resources delta;
 
-    public static boolean isParsingPossible(String[] cmdParts) {
-        boolean isOperationTypeValid = Arrays.stream(OperationType.values())
-                .anyMatch(type -> cmdParts[0].toUpperCase().equals(type.name()));
-        return isOperationTypeValid && cmdParts.length == 3;
-    }
+    public static Parser getParser() {
+        return new Parser() {
+            @Override
+            public boolean isParsingPossible(String[] cmdParts) {
+                boolean isOperationTypeValid = Arrays.stream(OperationType.values())
+                        .anyMatch(type -> cmdParts[0].toUpperCase().equals(type.name()));
+                return isOperationTypeValid && cmdParts.length == 3;
+            }
 
-    public static ResourcesCommand parse(String[] cmdParts) {
-        String operationString = cmdParts[0];
-        String resourceType = cmdParts[1];
-        int resourceAmount;
-        try {
-            resourceAmount = Integer.parseInt(cmdParts[2]);
-        } catch (NumberFormatException nfe) {
-            GuiManager.print("ERROR: '" + cmdParts[2] + "' is not a number");
-            return null;
-        }
-        OperationType operation = OperationType.valueOf(operationString.toUpperCase());
-        if (operation == OperationType.SUB) {
-            resourceAmount = -resourceAmount;
-        }
+            @Override
+            public Command parse(String[] cmdParts) {
+                String operationString = cmdParts[0];
+                String resourceType = cmdParts[1];
+                int resourceAmount;
+                try {
+                    resourceAmount = Integer.parseInt(cmdParts[2]);
+                } catch (NumberFormatException nfe) {
+                    GuiManager.print("ERROR: '" + cmdParts[2] + "' is not a number");
+                    return null;
+                }
+                OperationType operation = OperationType.valueOf(operationString.toUpperCase());
+                if (operation == OperationType.SUB) {
+                    resourceAmount = -resourceAmount;
+                }
 
-        ResourcesCommand command = new ResourcesCommand();
-        command.delta = Resources.fromString(resourceType, resourceAmount);
-        return command;
+                ResourcesCommand command = new ResourcesCommand();
+                command.delta = Resources.fromString(resourceType, resourceAmount);
+                return command;
+            }
+        };
     }
 
     @Override

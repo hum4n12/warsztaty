@@ -21,61 +21,67 @@ public class BurnCommand implements Command {
         this.amount = amount;
     }
 
-    //burn <itemType[match,box]> <item subtype[small,large] if type is 'box'> <amount> - to watch it burn"
-    public static boolean isParsingPossible(String[] cmdParts) {
-        return (cmdParts[0].equals(BurnCommand.NAME) && (cmdParts.length == 3 || cmdParts.length == 4));
-    }
-
-    public static Command parse(String[] cmdParts) {
-        String burnObject = cmdParts[1].toUpperCase();
-        Match match = null;
-        MatchBox matchBox = null;
-        int lastCommandPart = 2;
-
-        if (!(burnObject.equals("MATCH") || burnObject.equals("BOX"))) {
-            GuiManager.print("ERROR: '" + cmdParts[1] + "' is not a match or box");
-            return null;
-        } else if (burnObject.equals("BOX")) {
-            lastCommandPart = 3;
-            String size = cmdParts[2].toUpperCase();
-
-            if (size.equals("SMALL") || size.equals("LARGE")) {
-                burnObject = size + "_MATCH" + burnObject;
-            } else {
-                GuiManager.print("ERROR: '" + cmdParts[2] + "' is not a valid size");
-                return null;
+    //burn <itemType[match,box]> <item subtype[small,large] if type is 'box'> <amount> - to watch it burn
+    public static Parser getParser() {
+        return new Parser() {
+            @Override
+            public boolean isParsingPossible(String[] cmdParts) {
+                return (cmdParts[0].equals(BurnCommand.NAME) && (cmdParts.length == 3 || cmdParts.length == 4));
             }
-        }
 
-        String finalBurnObject = burnObject;
-        Optional<Cost> boxOpt = Arrays.stream(Cost.values())
-                .filter(item -> item.name().equals(finalBurnObject))
-                .findAny();
+            @Override
+            public Command parse(String[] cmdParts) {
+                String burnObject = cmdParts[1].toUpperCase();
+                Match match = null;
+                MatchBox matchBox = null;
+                int lastCommandPart = 2;
+
+                if (!(burnObject.equals("MATCH") || burnObject.equals("BOX"))) {
+                    GuiManager.print("ERROR: '" + cmdParts[1] + "' is not a match or box");
+                    return null;
+                } else if (burnObject.equals("BOX")) {
+                    lastCommandPart = 3;
+                    String size = cmdParts[2].toUpperCase();
+
+                    if (size.equals("SMALL") || size.equals("LARGE")) {
+                        burnObject = size + "_MATCH" + burnObject;
+                    } else {
+                        GuiManager.print("ERROR: '" + cmdParts[2] + "' is not a valid size");
+                        return null;
+                    }
+                }
+
+                String finalBurnObject = burnObject;
+                Optional<Cost> boxOpt = Arrays.stream(Cost.values())
+                        .filter(item -> item.name().equals(finalBurnObject))
+                        .findAny();
 
 
-        if (!(boxOpt.isPresent() && (boxOpt.get().getEffect().get() instanceof MatchBox) || (boxOpt.get().getEffect().get() instanceof Match))) {
-            GuiManager.print("ERROR: '" + burnObject + "' is not a match or matchbox");
-            return null;
-        }
+                if (!(boxOpt.isPresent() && (boxOpt.get().getEffect().get() instanceof MatchBox) || (boxOpt.get().getEffect().get() instanceof Match))) {
+                    GuiManager.print("ERROR: '" + burnObject + "' is not a match or matchbox");
+                    return null;
+                }
 
-        int amount;
-        try {
-            amount = Integer.parseInt(cmdParts[lastCommandPart]);
-        } catch (NumberFormatException nfe) {
-            GuiManager.print("ERROR: '" + cmdParts[lastCommandPart] + "' is not a number");
-            return null;
-        }
+                int amount;
+                try {
+                    amount = Integer.parseInt(cmdParts[lastCommandPart]);
+                } catch (NumberFormatException nfe) {
+                    GuiManager.print("ERROR: '" + cmdParts[lastCommandPart] + "' is not a number");
+                    return null;
+                }
 
-        Object burnTarget = boxOpt.get().getEffect().get();
+                Object burnTarget = boxOpt.get().getEffect().get();
 
-        if (burnTarget instanceof MatchBox) {
-            matchBox = (MatchBox) burnTarget;
-        } else {
-            match = (Match) burnTarget;
-        }
+                if (burnTarget instanceof MatchBox) {
+                    matchBox = (MatchBox) burnTarget;
+                } else {
+                    match = (Match) burnTarget;
+                }
 
 
-        return new BurnCommand(matchBox, match, amount);
+                return new BurnCommand(matchBox, match, amount);
+            }
+        };
     }
 
     @Override

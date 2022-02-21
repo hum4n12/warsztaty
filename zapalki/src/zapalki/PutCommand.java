@@ -17,32 +17,39 @@ public class PutCommand implements Command {
     }
 
     //put <box type[small,large]> <amount> - to put random matches to a box of given size
-    public static boolean isParsingPossible(String[] cmdParts) {
-        return (cmdParts[0].equals(PutCommand.NAME) && cmdParts.length == 3);
+    public static Parser getParser() {
+        return new Parser() {
+            @Override
+            public boolean isParsingPossible(String[] cmdParts) {
+                return (cmdParts[0].equals(PutCommand.NAME) && cmdParts.length == 3);
+            }
+
+            @Override
+            public Command parse(String[] cmdParts) {
+                String boxType = cmdParts[1].toUpperCase();
+                MatchBox type;
+                Cost getMatchBoxType; //cost containes matchbox objects
+                int amount;
+                try {
+                    amount = Integer.parseInt(cmdParts[2]);
+                } catch (NumberFormatException nfe) {
+                    GuiManager.print("ERROR: '" + cmdParts[2] + "' is not a number");
+                    return null;
+                }
+                Optional<Cost> boxOpt = Arrays.stream(Cost.values())
+                        .filter(item -> item.name().equals(boxType))
+                        .findAny();
+
+                if (!(boxOpt.isPresent() && boxOpt.get().getEffect().get() instanceof MatchBox)) {
+                    GuiManager.print("ERROR: '" + boxType + "' is not a matchbox");
+                    return null;
+                }
+                type = (MatchBox) boxOpt.get().getEffect().get();
+                return new PutCommand(type, amount);
+            }
+        };
     }
 
-    public static Command parse(String[] cmdParts) {
-        String boxType = cmdParts[1].toUpperCase();
-        MatchBox type;
-        Cost getMatchBoxType; //cost containes matchbox objects
-        int amount;
-        try {
-            amount = Integer.parseInt(cmdParts[2]);
-        } catch (NumberFormatException nfe) {
-            GuiManager.print("ERROR: '" + cmdParts[2] + "' is not a number");
-            return null;
-        }
-        Optional<Cost> boxOpt = Arrays.stream(Cost.values())
-                .filter(item -> item.name().equals(boxType))
-                .findAny();
-
-        if (!(boxOpt.isPresent() && boxOpt.get().getEffect().get() instanceof MatchBox)) {
-            GuiManager.print("ERROR: '" + boxType + "' is not a matchbox");
-            return null;
-        }
-        type = (MatchBox) boxOpt.get().getEffect().get();
-        return new PutCommand(type, amount);
-    }
 
     @Override
     public void execute(Items data) {

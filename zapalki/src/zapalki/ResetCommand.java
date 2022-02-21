@@ -11,12 +11,19 @@ public class ResetCommand implements Command {
 
     }
 
-    public static boolean isParsingPossible(String[] cmdParts) {
-        return (cmdParts[0].equals(ResetCommand.NAME) && cmdParts.length == 1);
-    }
+    public static Parser getParser() {
+        return new Parser() {
 
-    public static Command parse(String[] cmdParts) {
-        return new ResetCommand();
+            @Override
+            public boolean isParsingPossible(String[] cmdParts) {
+                return (cmdParts[0].equals(ResetCommand.NAME) && cmdParts.length == 1);
+            }
+
+            @Override
+            public Command parse(String[] cmdParts) {
+                return new ResetCommand();
+            }
+        };
     }
 
     @Override
