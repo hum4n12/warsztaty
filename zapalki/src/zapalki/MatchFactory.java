@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class MatchFactory {
-    public static final Map<Colors,Supplier<Match>> mapa = new HashMap<>(){{
+    public static final Map<Colors,Supplier<Match>> mapa = new HashMap<Colors,Supplier<Match>>(){{
         put(Colors.RED,RedMatch::new);
         put(Colors.BLUE,BlueMatch::new);
         put(Colors.GREEN,GreenMatch::new);
@@ -20,9 +20,19 @@ public class MatchFactory {
         if(match != null){
             val = match.get();
         } else{
-            System.out.println("That color does not exist");
+            GuiManager.print("That color does not exist");
         }
 
         return val;
+    }
+
+    public static Object createMatchBox(MatchBox.MatchBoxType type) {
+        switch (type) {
+        case LARGE: return new LargeMatchBox();
+        case SMALL: return new SmallMatchBox();
+        default:
+            GuiManager.print("Invalid MatchBox type");
+            return null;
+        }
     }
 }

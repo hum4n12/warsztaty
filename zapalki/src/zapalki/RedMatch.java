@@ -6,6 +6,6 @@ public class RedMatch extends Match{
     }
     @Override
     public void putOnFire(){
-        System.out.println(color);
+        GuiManager.print(color);
     }
 }

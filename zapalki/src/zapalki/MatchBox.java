@@ -4,13 +4,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class MatchBox{
+    public enum MatchBoxType {
+        LARGE,
+        SMALL
+    }
+
     //klasa pudełko zapałek
     protected int boxSize = 5;
     protected List<Match> boxSpace;
 
     public void addMatch(Match match){
         boxSpace.add(match);
-        System.out.println("Added " + match.color + " match");
+        GuiManager.print("Added " + match.color + " match");
     }
 
     public Match getMatch(){
@@ -26,13 +31,13 @@ public abstract class MatchBox{
         boxSpace.stream()
                 .filter(match -> match.color.equals(color1))
                 .peek(match -> match.color = color2)
-                .forEach(match -> System.out.println(match.color));
+                .forEach(match -> GuiManager.print(match.color));
                 ;
     }
 
     public void burnAll(){
         boxSpace = boxSpace.stream()
-                .peek(match -> System.out.println("Spalono zapalke o kolorze: "+match.color))
+                .peek(match -> GuiManager.print("Spalono zapalke o kolorze: "+match.color))
                 .map(match -> new Ashes())
                 .collect(Collectors.toList());
     }
@@ -43,6 +48,14 @@ public abstract class MatchBox{
         boxSpace.set(num,null);
         placeholder.putOnFire();
         return placeholder;
+    }
+
+    public void printContent(){
+        boxSpace.forEach(match -> GuiManager.print(match.toString()));
+    }
+
+    public int getRemainingSpace(){
+        return boxSize - boxSpace.size();
     }
 
     public int getBoxSize() {

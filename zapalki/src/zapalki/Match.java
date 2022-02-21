@@ -2,6 +2,6 @@ package zapalki;
 
 public abstract class Match {
     protected String color;
-    abstract void putOnFire();
+    public abstract void putOnFire();
     //klasa zapałka
 }
